@@ -1,0 +1,22 @@
+{
+  "Account": [
+    {
+      "id": "acc-1",
+      "name": "SARIYER",
+      "iban": "TR91 0001 5001 5800 7292 5642 28",
+      "balance": 43045964.78,
+      "blocked_balance": 0,
+      "currency": "TRY",
+      "created_date": "2026-08-01T00:00:00.000Z"
+    }
+  ],
+  "Profile": [
+    {
+      "id": "prof-1",
+      "customer_name": "Murat Daştan",
+      "customer_no": "00000000",
+      "created_date": "2026-08-01T00:00:00.000Z"
+    }
+  ],
+  "Transaction": []
+}

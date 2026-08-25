@@ -1,0 +1,36 @@
+{
+  "name": "Transaction",
+  "type": "object",
+  "properties": {
+    "amount": {
+      "type": "number"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "transfer_out",
+        "transfer_in",
+        "blocked",
+        "unblocked"
+      ],
+      "default": "transfer_out"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "iban": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "transaction_date": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": [
+    "amount",
+    "type"
+  ]
+}

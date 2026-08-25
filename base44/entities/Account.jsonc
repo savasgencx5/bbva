@@ -1,0 +1,28 @@
+{
+  "name": "Account",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "iban": {
+      "type": "string"
+    },
+    "balance": {
+      "type": "number",
+      "default": 0
+    },
+    "blocked_balance": {
+      "type": "number",
+      "default": 0
+    },
+    "currency": {
+      "type": "string",
+      "default": "TRY"
+    }
+  },
+  "required": [
+    "name",
+    "balance"
+  ]
+}

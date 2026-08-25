@@ -1,0 +1,16 @@
+{
+  "name": "MiniBank",
+  "short_name": "MiniBank",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121419",
+  "theme_color": "#121419",
+  "icons": [
+    {
+      "src": "https://media.base44.com/images/public/6a694296a06f82dc8d145685/751191048_unnamed.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
