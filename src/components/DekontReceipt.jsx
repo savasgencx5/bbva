@@ -100,7 +100,7 @@ const DekontReceipt = forwardRef(function DekontReceipt({ data, account }, ref) 
         </div>
         <div style={boxBorder}>
           <div style={infoRow}>SAYIN</div>
-          <div style={{ ...infoRow, fontWeight: 700, color: BOLD }}>{recipientName}</div>
+          <div style={{ ...infoRow, fontWeight: 700 }}>{recipientName}</div>
           
         </div>
       </div>
