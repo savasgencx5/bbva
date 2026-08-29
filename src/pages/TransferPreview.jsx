@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Info } from 'lucide-react';
-import { getPendingTransfer, clearPendingTransfer, getAccount, createTransaction, setReceipt, formatNumber } from '@/lib/bank';
-import { base44 } from '@/api/base44Client';
+import { getPendingTransfer, clearPendingTransfer, getAccount, createTransaction, setReceipt, formatNumber, updateAccount } from '@/lib/bank';
+
+// import { base44 } from '@/api/base44Client';
 
 function Row({ label, value, last }) {
   return (
@@ -33,17 +34,55 @@ export default function TransferPreview() {
   const fee = 8.37;
 
   const confirm = async () => {
-    setBusy(true);
-    try {
-      const acc = await getAccount();
-      const newBalance = acc.balance - data.amount;
-      await base44.entities.Account.update(acc.id, { balance: newBalance });
-      const tx = await createTransaction({ amount: data.amount, type: 'transfer_out', recipient_name: data.recipient_name, iban: data.iban, description: data.description });
-      setReceipt(tx);
-      clearPendingTransfer();
-      navigate('/transfer/success');
-    } finally { setBusy(false); }
-  };
+  setBusy(true);
+
+  try {
+    const acc = await getAccount();
+
+    const amount = Number(data.amount);
+
+    if (!Number.isFinite(amount) || amount <= 0) {
+      throw new Error('Geçersiz transfer tutarı.');
+    }
+
+    const availableBalance =
+      Number(acc.balance || 0) - Number(acc.blocked_balance || 0);
+
+    if (amount > availableBalance) {
+      throw new Error('Yetersiz bakiye.');
+    }
+
+    const newBalance = Number(acc.balance || 0) - amount;
+
+    const updatedAccount = await updateAccount(acc.id, {
+      balance: newBalance
+    });
+
+    const tx = await createTransaction({
+      amount,
+      type: 'transfer_out',
+      recipient_name: data.recipient_name,
+      iban: data.iban,
+      description: data.description
+    });
+
+    setReceipt({
+      ...tx,
+      amount,
+      balance_after: updatedAccount.balance
+    });
+
+    clearPendingTransfer();
+
+    navigate('/transfer/success');
+
+  } catch (error) {
+    console.error('Transfer işlemi başarısız:', error);
+    alert(error?.message || 'Transfer işlemi gerçekleştirilemedi.');
+  } finally {
+    setBusy(false);
+  }
+};
 
   return (
     <div>
